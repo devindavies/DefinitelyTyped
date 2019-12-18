@@ -10,6 +10,7 @@
 //                 Alex Price <https://github.com/remotealex>
 //                 Maciej Dabek <https://github.com/bombek92>
 //                 Hiroshi Ioka <https://github.com/hirochachacha>
+//                 Devin Davies <https://github.com/devindavies>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 // TypeScript Version: 2.8
 
@@ -39,8 +40,8 @@ export namespace ReactStripeElements {
         stripeAccount?: string;
     }
     type StripeProviderProps =
-        | { apiKey: string; stripe?: never } & StripeProviderOptions
-        | { apiKey?: never; stripe: stripe.Stripe | null } & StripeProviderOptions;
+        | ({ apiKey: string; stripe?: never } & StripeProviderOptions)
+        | ({ apiKey?: never; stripe: stripe.Stripe | null } & StripeProviderOptions);
 
     interface StripeProps {
         createSource(sourceData?: SourceOptions): Promise<SourceResponse>;
@@ -50,6 +51,11 @@ export namespace ReactStripeElements {
             paymentMethodType: stripe.paymentMethod.paymentMethodType,
             data?: stripe.CreatePaymentMethodOptions,
         ): Promise<stripe.PaymentMethodResponse>;
+        confirmCardPayment(
+            clientSecret: string,
+            data?: stripe.ConfirmCardPaymentData,
+            options?: stripe.ConfirmCardPaymentOptions,
+        ): Promise<stripe.PaymentIntentResponse>;
         handleCardPayment(
             clientSecret: string,
             options?: stripe.HandleCardPaymentWithoutElementsOptions,
@@ -112,7 +118,9 @@ export class CardCVCElement extends CardCvcElement {}
 
 export class PostalCodeElement extends React.Component<ReactStripeElements.ElementProps> {}
 
-export class PaymentRequestButtonElement extends React.Component<ReactStripeElements.PaymentRequestButtonElementProps> {}
+export class PaymentRequestButtonElement extends React.Component<
+    ReactStripeElements.PaymentRequestButtonElementProps
+> {}
 
 export class IbanElement extends React.Component<ReactStripeElements.ElementProps> {}
 
